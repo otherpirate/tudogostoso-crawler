@@ -2,6 +2,7 @@ package crawler
 
 import (
 	"fmt"
+	"log"
 	"sync"
 
 	"github.com/gocolly/colly/v2"
@@ -25,7 +26,9 @@ func ExtractRecipe(input chan RecipeUrl, output chan Recipe, wg *sync.WaitGroup)
 		output <- recipe
 	})
 	for url = range input {
-		c.Visit(fmt.Sprintf("https://www.tudogostoso.com.br%s", url.Link))
+		url := fmt.Sprintf("https://www.tudogostoso.com.br%s", url.Link)
+		log.Printf("[ExtractRecipe][Visiting] %s", url)
+		c.Visit(url)
 	}
 	wg.Done()
 }

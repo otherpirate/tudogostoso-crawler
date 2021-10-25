@@ -38,10 +38,14 @@ func FindAllRecipes(input chan string, output chan RecipeUrl, wg *sync.WaitGroup
 	for link := range input {
 		category = strings.ReplaceAll(link, "/categorias/", "")
 		page := 1
+		base := fmt.Sprintf("https://www.tudogostoso.com.br%s", link)
 		for {
 			hasContent = false
-			url := fmt.Sprintf("https://www.tudogostoso.com.br%s?page=%d", link, page)
-			log.Println(url)
+			url := base
+			if page != 1 {
+				url = fmt.Sprintf("%s?page=%d", base, page)
+			}
+			log.Printf("[FindAllRecipes][Visiting] %s", url)
 			c.Visit(url)
 			if !hasContent {
 				break
