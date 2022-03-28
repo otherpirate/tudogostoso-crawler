@@ -12,8 +12,9 @@ type Recipe struct {
 }
 
 type Ingredient struct {
-	Name       string `json:"name"`
-	Quantity   string `json:"quantity"`
-	Unit       string `json:"ingredients"`
-	IsOptional bool   `json:"is_optional"`
+	Name        string `json:"name"`
+	Quantity    string `json:"quantity"`
+	Unit        string `json:"unit"`
+	IsOptional  bool   `json:"is_optional"`
+	Description string `json:"description"`
 }
