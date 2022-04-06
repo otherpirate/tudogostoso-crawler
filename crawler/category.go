@@ -1,6 +1,7 @@
 package crawler
 
 import (
+	"log"
 	"sync"
 
 	"github.com/gocolly/colly/v2"
@@ -15,6 +16,9 @@ func FindAllCategories(output chan string, wg *sync.WaitGroup) {
 			output <- link.AttrOr("href", "")
 		}
 	})
-	c.Visit("https://www.tudogostoso.com.br/categorias")
+	err := c.Visit("https://www.tudogostoso.com.br/categorias")
+	if err != nil {
+		log.Fatalf("[FindAllCategories][Visit] Error %v", err)
+	}
 	wg.Done()
 }

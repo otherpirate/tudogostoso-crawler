@@ -46,7 +46,10 @@ func FindAllRecipes(input chan string, output chan RecipeUrl, wg *sync.WaitGroup
 				url = fmt.Sprintf("%s?page=%d", base, page)
 			}
 			log.Printf("[FindAllRecipes][Visiting] %s", url)
-			c.Visit(url)
+			err := c.Visit(url)
+			if err != nil {
+				log.Fatalf("[FindAllRecipes][Visit] Error %v", err)
+			}
 			if !hasContent {
 				break
 			}

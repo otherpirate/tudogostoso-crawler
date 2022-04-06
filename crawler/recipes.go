@@ -33,7 +33,10 @@ func ExtractRecipe(input chan RecipeUrl, output chan Recipe, wg *sync.WaitGroup)
 	for url = range input {
 		url := fmt.Sprintf("https://www.tudogostoso.com.br%s", url.Link)
 		log.Printf("[ExtractRecipe][Visiting] %s", url)
-		c.Visit(url)
+		err := c.Visit(url)
+		if err != nil {
+			log.Fatalf("[ExtractRecipe][Visit] Error %v", err)
+		}
 	}
 	wg.Done()
 }
